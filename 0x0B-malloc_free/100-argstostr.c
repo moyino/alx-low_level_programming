@@ -3,38 +3,50 @@
 
 /**
  * argstostr - is a function that concatenates args
- * @ac: is the number of arguments
- * @av: is the pointer to the arguments
- * Return: a pointer to a new string or NULL
+ * @ac: is the argument count
+ * @av: is the argument vector
+ * Return: a pointer to an array of char
  */
 
 char *argstostr(int ac, char **av)
 {
-	char *s;
-	int i, j, m = ac, l = 0;
+	char *aout;
+	int c, i, j, ia;
 
-	if (ac == 0 || !av)
+	if (ac == 0)
 		return (NULL);
+
+	for (c = i = 0; i < ac; i++)
 	{
-		for (i = 0; i < ac;  i++)
-			m++;
+		if (av[i] == NULL)
+			return (NULL);
+
+		for (j = 0; av[i][j] != '\0'; j++)
+			c++;
+		c++;
 	}
 
-	s = (char *) malloc((sizeof(char) * m) + 1);
-	if (s == NULL)
-		return (NULL);
+	aout = malloc((c + 1) * sizeof(char));
 
-	for (i = 0; i < ac; i++)
+	if (aout == NULL)
 	{
-		for (j = 0; av[i][j]; j++)
+		free(aout);
+		return (NULL);
+	}
+
+	for (i = j = ia = 0; ia < c; j++, ia++)
+	{
+		if (av[i][j] == '\0')
 		{
-			s[l++] = av[i][j];
+			aout[ia] = '\n';
+			i++;
+			ia++;
+			j = 0;
 		}
-		s[l++] = '\n';
+		if (ia < c - 1)
+			aout[ia] = av[i][j];
 	}
+	aout[ia] = '\0';
 
-	s[m] = '\0';
-
-	return (s);
+	return (aout);
 }
-
