@@ -7,7 +7,7 @@
  * @s2: second string
  * @n:amount of bytes.
  *
- * Retunrn: pointer to the allocated memory.
+ * Return: pointer to the allocated memory.
  * if malloc fails, status value is equal to 98.
  */
 
